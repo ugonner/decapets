@@ -1,0 +1,61 @@
+{% extends "admin/layout.html" %}
+{% block main %}
+
+            <!-- pets -->
+            <div id="bookings" class="my-5">
+                <h3>Bookings | <small class="font-weight-bolder">{{bookings|length}}</small></h3>
+                <div class="row">
+                  {%if bookings|length > 0%}
+                  <div class="table">
+                    <table class="table-responsive table-striped">
+                      <thead>
+                        <th>Client</th>
+                        <th>bookings status</th>
+                        <th colspan="3">Book Status Comment</th>
+                        <th>Cost</th>
+                        <th>Last Update</th>
+                        <th>Payment Status</th>
+                      </thead>
+                      <tbody>
+                        {% for b in bookings %}
+                        <tr>
+                        <td>{{ b.user_name }}</td>
+                        <td>{{ b.booking_status }}</td>
+                        <td colspan="3">
+                          {{ b.booking_status_report }}
+                          <button class="btn btn-block btn-primary" data-toggle="collapse" data-target="#update_booking_status">Update Status</button>
+                                <div class="collapse" id="update_booking_status">
+                                  <form action="/admin" method="post">
+                                    <div class="form-group">
+                                      <select class="form-control" name="booking_status">
+                                        <option value="">Select status</option>
+                                        <option value="Under Verification">Under Verification</option>
+                                        <option value="Verified">Verified</option>
+                                        <option value="Approved">Approved</option>
+                                        <option value="Not Approved">Not Approved</option>
+                                        
+                                      </select>
+                                    </div>
+                                    <div class="form-group">
+                                      <textarea class="form-control" name="booking_status_report" aria-placeholder="comment on status" aria-required="required"></textarea>
+                                    </div>
+                                    <input type="hidden" name="id" value="{{b.id}}" />
+                                    <input type="hidden" name="a" value="update_booking_status" />
+                                    <button class="btn btn-block btn-primary" type="submit">Update</button>
+                                  </form>
+                                </div>
+  
+                        </td>
+                        <td>{{ b.total_cost }}</td>
+                        <td>{{ b.booking_status_date }}</td>
+                        <td>{{ b.payment_status }}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                  {% else %}
+                    <p class="p-5">No Bookings Yet</p>
+                  {% endif %}
+                </div>
+{% endblock %}

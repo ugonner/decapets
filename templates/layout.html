@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+    <link href="css/style.css" rel="stylesheet">
+    <!-- end bootstrap -->
+
+    <!-- http://getbootstrap.com/docs/5.1/ -->
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
+
+    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
+
+    <!-- https://favicon.io/emoji-favicons/money-bag/ -->
+    <link href="/static/favicon.ico" rel="icon">
+
+    <link href="/static/decapet_style/style.css" rel="stylesheet">
+
+    <title>Decapet Project: {% block title %}{% endblock %}</title>
+
+</head>
+
+<body>
+
+    <!-- <div class="container"> -->
+        <header
+        class="bg-light border navbar navbar-expand-md navbar-light justify-content-center">
+            <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+                <img src="/static/decapet_images/decapet_logo.png" alt="decapet logo" width="57" height="42">
+            </a>
+
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                  <form class="d-flex" action="/pets" method="get">
+                    <input class="form-control me-2 lg" type="search" name="val" placeholder="Search Pet" aria-label="Search" required>
+                    <input type="hidden" name="a" value="search">
+                    <button class="btn btn-outline-success btn-primary" type="submit">Search</button>
+                  </form>
+                </div>
+              </nav>
+
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 nav-items">
+                <li><a href="/" class="nav-link px-2 link-secondary nav-item link-dark">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle link-dark" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Adopt
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item link-dark" href="/pets?a=get_pets">Pets for Adoption</a></li>
+                    </ul>
+                </li>
+                <li><a href="contact.html" class="nav-link px-2 link-dark">Contact</a></li>
+                <li><a href="aboutus.html" class="nav-link px-2 link-dark">About</a></li>
+
+                <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 nav-items">
+
+                    {% if session["user_id"] %}
+
+                    <li class="nav-item"><a class="nav-link" href="/pets?a=get_pets">Book Pet</a></li>
+
+                    {% if session["cart"] %}
+
+                    <li class="nav-item"><a class="nav-link" href="/bookings?a=clear_booking"> Clear Book</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/pets?a=get_pets">cart {{session["cart"]["pets"] |
+                            length
+                            }}</a></li>
+
+                    {% endif %}
+                    {% if session["is_admin"] %}
+
+                    <li class="nav-item"><a class="nav-link" href="/admin"> Admin Panel</a></li>
+
+                    {% endif %}
+
+                    <li class="nav-item"><a class="nav-link" href="/user?a=get_user">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+
+                    {% else %}
+
+                    <li class="nav-item">
+                        <a class="nav-link link-dark" href="/login">Login</a>
+                    </li>
+                    <div class="vr"></div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle link-dark" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Register
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item link-dark" href="/register">Pet Lover</a></li>
+                            <!-- <li><a class="dropdown-item link-dark" href="register-shelter-home.html">Shelter Home</a> -->
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    {% endif %}
+                </ul>
+        </header>
+
+    {% if get_flashed_messages() %}
+    <header>
+        <div class="alert alert-primary mb-0 text-center" role="alert">
+            {{ get_flashed_messages() | join(" ") }}
+        </div>
+    </header>
+    {% endif %}
+
+    <main class="container-fluid py-0">
+
+        {% block main %}{% endblock %}
+    </main>
+
+    <footer class="container">
+        <!-- <p class="float-end"><a href="#">Back to top</a></p> -->
+        <p>© 2022 Company, Inc.
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Report a Pet
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            <h3>Report A Pet Cruelty or Stray</h3>
+        </div>
+    </div>
+    <form action="/pet_reports" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <input autofocus class="form-control" id="username" name="pet_name" placeholder="Pet name" required type="text">
+        </div>
+        
+        <div class="mb-3">
+            <textarea class="form-control" id="username" name="description" placeholder="Describe Pet" required></textarea>
+        </div>
+        
+        <div class="mb-3">
+            <textarea class="form-control" id="username" name="address" placeholder="Where's the last location of this pet? " required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <input class="form-control" id="password" name="pet_image_url" placeholder="Pet image" type="file" required accept="image*">
+        </div>
+        <div class="mb-3">
+            <select id="category_id" name="category_id" class="form-control" required>
+                <option value="">Select Pet Category</option>
+                {% for c in categories %}
+                <option value="{{c.id}}">{{c.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <select id="subcategory_id" name="subcategory_id" class="form-control" required>
+                <option value="">Select Pet SubCategory</option>
+                {% for sb in subcategories %}
+                <option value="{{sb.id}}">{{sb.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <select name="shelter_home_id" class="form-control" required>
+                <option value="">Select Shelter home</option>
+                {% for s in shelter_homes %}
+                <option value="{{s.id}}">{{s.shelter_home_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <select name="pet_status" class="form-control" required>
+                <option value="">Select Status OF Pet</option>
+                <option value="strayed">Missing / Strayed</option>
+                <option value="cruelty">Cruelty</option>
+                
+            </select>
+        </div>
+        
+        
+
+        <div class="mb-3">
+            <label for="age">Pet Age<br></label>
+            <input type="tel" name="age" class="form-control" placeholder="1" required />
+        </div>
+
+        <button class="btn btn-primary" type="submit">Report Pet</button>
+    </form>
+
+
+
+{% endblock %}

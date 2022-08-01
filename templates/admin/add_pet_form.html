@@ -1,0 +1,62 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}
+    Upload From Admin
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            <h4>{{ message }}</h4>
+            <h3>Upload A Pet</h3>
+        </div>
+    </div>
+    <form action="/pets" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <input autofocus class="form-control" id="username" name="pet_name" placeholder="Pet name" type="text" required>
+        </div>
+        <div class="mb-3">
+            <textarea class="form-control" id="username" name="description" placeholder="Describe Pet" required></textarea>
+        </div>
+        <div class="mb-3">
+            <input class="form-control" id="pet_image_url" name="pet_image_url" placeholder="Pet image" type="file" accept="image*" required>
+        </div>
+        <div class="mb-3">
+            <input  class="form-control" id="price" name="price" placeholder="{{10.00 | usd}}" type="tel" required>
+        </div>
+        <div class="mb-3">
+            <select name="category_id" id="category_id" class="form-control" required>
+                <option value="">Select Pet Category</option>
+                {% for c in categories %}
+                <option value="{{c.id}}">{{c.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <select name="subcategory_id" id="subcategory_id" class="form-control" required>
+                <option value="">Select Pet SubCategory</option>
+                
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <select name="shelter_home_id" class="form-control" required>
+                <option value="">Select Shelter home</option>
+                {% for s in shelter_homes %}
+                <option value="{{s.id}}">{{s.shelter_home_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        
+
+        <div class="mb-3">
+            <label for="age">Pet Age<br></label>
+            <input type="tel" name="age" class="form-control" placeholder="1" required>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Add Pet</button>
+    </form>
+
+
+{% endblock %}

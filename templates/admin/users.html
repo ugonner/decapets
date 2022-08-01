@@ -1,0 +1,61 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}
+    Pets
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-sm-12 p-5">
+            <h3>People | <small class="font-weight-bolder">{{users|length}}</small></h3>
+        </div>
+
+        <div class=""></div>
+    </div>
+    <div class="row">
+        {% for p in users%}
+            <div class="col-sm-4">
+                <div>
+                    <h3><a class="btn font-weight-bold" href="/user?a=get_user&id={{p.id}}"> {{p.user_name}}</a></h3>
+                </div>
+                <div>
+                    <h6> Role | {{p.role }}   </h6>
+                    
+                </div>
+            </div>
+            {% if session["is_admin"] %}
+                <div class="row">
+                    <div class="col-12">
+                        <a href="/admin?a=make_admin&user_id={{p.id}}" class="btn btn-danger btn-lg">Make Admin</a>
+                            
+                        <button data-toggle="collapse" data-target="#update_user" class="btn btn-lg btn-primary">Manage User</button>
+                    <div class="collapse" id="update_user">
+                        <form action="/user" method="get">
+                            <div class="form-group">
+                                <select class="form-control" name="role">
+                                    <option value="">Please Select Role</option>
+                                    <option value="Client">Client</option>
+                                    <option value="Staff">Staff</option>
+                                    <option value="User">User</option>
+
+                                </select>
+
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" name="user_id" value="{{p.id}}" />
+                                <input type="hidden" name="a" value="update_user" />
+                                <button class="btn btn-btlock btn-primary" type="submit">Update User</button>
+                                
+                            </div>
+                        </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            {% endif %}
+            <br><br>
+        {% endfor %}
+    </div>
+
+{% endblock %}

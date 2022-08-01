@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col-12">
+        <h3 class="text-center text-capitalize">{{user[0].user_name}}</h3>
+        <h6 class="text-center">{{user[0].role}}</h6>
+        <h5 class="my-4 text-center">
+            <a class="btn btn-lg btn-primary" href="/pet_reports?a=add_pet_report">Report A Pet</a>
+        </h5>
+    </div>
+</div>
+
+<ul class="nav nav-tabs">
+    <li class="active "><a class="btn p-5" data-toggle="tab" href="#home">My Bookings {{ bookings | length}}</a></li>
+    <li><a class="btn p-5" data-toggle="tab" href="#menu1">My Reports {{pet_reports | length}}</a></li>
+  </ul>
+  
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h3 class="m-2">My Bookings</h3>
+      <div>
+          <table class="table-responsive table-striped table-stripped table-primary">
+            <thead>
+                <th>Booking Status</th>
+                <th>Date</th>
+                <th>Booking Status comment</th>
+                <th>Payment status</th>
+                <th>Action</th>
+          
+            </thead>
+            <tbody>
+
+                {% for b in bookings %}
+                <tr>
+                    <td>{{ b.booking_status}}</td>
+                    <td>{{ b.booking_status_date}}</td>
+                    <td>{{ b.booking_status_report}}</td>
+                    <td>{{ b.payment_status}}</td>
+                    <td>
+                        {% if b.payment_status | lower != "paid" %}
+                        <a href="/bookings?a=pay&id={{b.id}}" class="btn bg-transparent">Pay</a>
+                        {% endif %}
+                        <a href="/bookings?a=get_cart&cart_id={{b.cart_id}}" class="btn bg-transparent">View Order</a> 
+                    </td>
+                </tr>
+                <tr></tr>
+            
+                {% endfor %}
+            </tbody>
+            </table>
+      </div>
+    </div>
+
+      <div id="menu1" class="tab-pane fade in active">
+        <h3 class="m-2">My Reports</h3>
+        <div>
+            <table class="table-responsive table-striped">
+              <thead>
+                  <th>Pet Status</th>
+                  <th>Date</th>
+                  <th>Status comment</th>
+                  <th>Pet Image</th>
+                  <th>Action</th>
+            
+              </thead>
+              <tbody>
+  
+                  {% for b in pet_reports %}
+                  <tr>
+                      <td>{{ b.pet_status}}</td>
+                      <td>{{ b.upload_date}}</td>
+                      <td>{{ b.pet_status_report}}</td>
+                      <td> <img src="{{ b.pet_image_url}}" class="img-avatar avatar img-circle"/></td>
+                      <td>
+                          <a href="/pets/?a=get_pet&id={{b.id}}" class="btn btn-block bg-transparent">View</a> 
+                      </td>
+                  </tr>
+              
+                  {% endfor %}
+              </tbody>
+              </table>
+
+        </div>
+      </div>
+
+  </div>
+  
+{% endblock %}

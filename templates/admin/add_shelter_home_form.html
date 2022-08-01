@@ -1,0 +1,26 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}
+    Add Shelter Home
+{% endblock %}
+
+{% block main %}
+    <div class="p-5">
+        {{message}}
+    </div>
+    <form action="/shelter_homes" method="post">
+        <div class="mb-3">
+            <input autofocus class="form-control" id="username" name="shelter_home_name" placeholder="Enter Shelter Home Name" type="text" required>
+        </div>
+        <div class="mb-3">
+            <input class="form-control" id="username" name="email" placeholder="email" type="email" required>
+        </div>
+        <div class="mb-3">
+            <textarea class="form-control" id="password" name="address" placeholder="Address" required ></textarea>
+        </div>
+        <div class="mb-3">
+            <textarea class="form-control" id="password" name="description" placeholder="Brief About Home" required ></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Add New</button>
+    </form>
+{% endblock %}

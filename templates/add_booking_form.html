@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Home
+{% endblock %}
+
+{% block main %}
+    <div class="p-5">
+        {{message}}
+    </div>
+    
+    <div class="row">
+        <duv class="col-sm-8">
+
+            {% for p in pets %}
+                <div class="row my-2">
+                    <div class="col-sm-4">
+                        <img src="{{p["pet_image_url"]}}" class="img-fluid" alt="{{p['pet_name'] }} ">
+                    </div>
+                    <div class="col-sm-4">
+                        <h>
+                            <span class="btn"> {{p["pet_name"]}}</span></h>
+                        <h6>
+                            <span class="btn"> {{p["price"] | usd}}</span>
+                        </h6>
+                    </div>
+
+                </div>
+            {% endfor %}
+
+        </duv>
+        <div class="col-sm-4">
+            {% if session["cart"] %}
+            <div class="">
+                <form action="/bookings" method="post">
+        
+                    <div class="my-5">
+                        <textarea class="form-control" id="address" name="booking_address" placeholder="Enter Booking Address" required ></textarea>
+                        <input type="hidden" name="a" value="add_booking" />
+                    </div>
+            
+                    <button class="btn btn-block btn-lg btn-primary" type="submit">Book</button>
+                </form>
+        
+                <a href="/bookings?a=clear_booking" class="btn btn-block btn-lg btn-danger">Clear Cart</a>
+        
+            </div>
+            {% endif %}
+        </div>
+        </div>
+
+{% endblock %}

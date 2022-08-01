@@ -1,0 +1,215 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}
+    Admin
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+      <ul class="nav nav-tabs">
+          <li class="col-sm-3 active"><a class="btn p-5" data-toggle="tab" href="#pet_reports">Pet Reports <br> {{ pet_reports | length}}</a></li>
+          <li class="col-sm-3"><a class="btn p-5" data-toggle="tab" href="#bookings">Bookings <br> {{ bookings | length}}</a></li>
+          <li class="col-sm-3"><a class="btn p-5" data-toggle="tab" href="#pets">Pets In Stock <br> {{ pets | length}}</a></li>
+          <li class="col-sm-3"><a class="btn p-5" data-toggle="tab" href="#shelter_homes">Shelter Homes <br> {{ shelter_homes | length}}</a></li>
+        </ul>
+          
+          <div class="tab-content my-5">
+            <div id="pet_reports" class="tab-pane fade in active">
+              <h3 class="text-capitalize">Reported Pets</h3>
+              <p class="text-right"><a class="btn btn-lg" href="/pet_reports?a=add_pet_report"> Add Report + </a></p>
+              {% if pet_reports |length > 0 %}
+                <div class="table table-responsive">
+                    <table class="table table-responsive table-stripped bg-dark text-light">
+                        <thead>
+                            <th>sn</th>
+                            <th>Pet Name</th>
+                            <th>Pet Image</th>
+                            <th>Pet Category</th>
+                            <th>Pet Subcategory</th>
+                            <th colspan="3">Pet Status At Moment</th>
+                            <th>Pet Status Comment</th>
+                            <th>Pet location</th>
+                            <th>Pet Reporter</th>
+                        </thead>
+                        <tbody>
+                          
+                            {% for rp in pet_reports %}
+                            <tr>
+                            <td colspan="3">{{ rp.index }}</td>
+                            <td>{{ rp.pet_name }}</td>
+                            <th> <img src="{{rp.pet_image_url}}" style="width: 80px; height: 70px;" alt="{{rp.pet_name}}"/></th>
+                            <td>{{ rp.category_name }}</td>
+                            <td>{{ rp.subcategory_name }}</td>
+                            <td>
+                              {{ rp.pet_status }}
+                              <button class="btn btn-block btn-primary" data-toggle="collapse" data-target="#update_status">Update Status</button>
+                              <div class="collapse" id="update_status">
+                                <form action="/admin" method="post">
+                                  <div class="form-group">
+                                    <select class="form-control" name="pet_status">
+                                      <option value="">Select status</option>
+                                      <option value="Strayed">Strayed</option>
+                                      <option value="Cruelty">Cruelty</option>
+                                      <option value="Processing">Processing</option>
+                                      <option value="Found">Found</option>
+                                      <option value="Settled">Settled</option>
+                                    </select>
+                                  </div>
+                                  <div class="form-group">
+                                    <textarea class="form-control" name="pet_status_comment" aria-placeholder="comment on status" aria-required="required"></textarea>
+                                  </div>
+                                  <input type="hidden" name="id" value="{{rp.id}}" />
+                                  <input type="hidden" name="a" value="update_pet_report_status" />
+                                  <button class="btn btn-block btn-primary" type="submit">Update</button>
+                                </form>
+                              </div>
+                            </td>
+                            <td>{{ rp.pet_status_comment }}</td>
+                            <td>{{ rp.address }}</td>
+                            <td><a href="/user?a=get_user&id={{rp.user_id}}" class="btn btn-primary">{{rp.user_name}}</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+              {% else %}
+                <p>No Reports Yet </p>
+              {% endif %}
+            </div>
+            <!-- end of pet_reports -->
+
+            
+
+            <!-- pets -->
+            <div id="bookings" class="tab-pane my-5 fade">
+              <h3>Bookings</h3>
+              <div class="row">
+                {%if bookings|length > 0%}
+                <div class="table">
+                  <table class="table-responsive table-striped">
+                    <thead>
+                      <th>Client</th>
+                      <th>bookings status</th>
+                      <th colspan="3">Book Status Comment</th>
+                      <th>Cost</th>
+                      <th>Last Update</th>
+                      <th>Payment Status</th>
+                    </thead>
+                    <tbody>
+                      {% for b in bookings %}
+                      <tr>
+                      <td>{{ b.user_name }}</td>
+                      <td>{{ b.booking_status }}</td>
+                      <td colspan="3">
+                        {{ b.booking_status_report }}
+                        <button class="btn btn-block btn-primary" data-toggle="collapse" data-target="#update_booking_status">Update Status</button>
+                              <div class="collapse" id="update_booking_status">
+                                <form action="/admin" method="post">
+                                  <div class="form-group">
+                                    <select class="form-control" name="booking_status">
+                                      <option value="">Select status</option>
+                                      <option value="Under Verification">Under Verification</option>
+                                      <option value="Verified">Verified</option>
+                                      <option value="Approved">Approved</option>
+                                      <option value="Not Approved">Not Approved</option>
+                                      
+                                    </select>
+                                  </div>
+                                  <div class="form-group">
+                                    <textarea class="form-control" name="booking_status_report" aria-placeholder="comment on status" aria-required="required"></textarea>
+                                  </div>
+                                  <input type="hidden" name="id" value="{{b.id}}" />
+                                  <input type="hidden" name="a" value="update_booking_status" />
+                                  <button class="btn btn-block btn-primary" type="submit">Update</button>
+                                </form>
+                              </div>
+
+                      </td>
+                      <td>{{ b.total_cost }}</td>
+                      <td>{{ b.booking_status_date }}</td>
+                      <td>{{ b.payment_status }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                {% else %}
+                  <p class="p-5">No Bookings Yet</p>
+                {% endif %}
+              </div>
+            </div>
+
+            
+            <!-- pets -->
+            <div id="pets" class="tab-pane my-5 fade">
+              <h3>Pets In Stock</h3>
+              <div class="row">
+                <p class="text-right"><a class="btn btn-lg" href="/pets?a=add_pet"> Add + </a></p>
+                {%if pets|length > 0%}
+                <div class="table">
+                  <table class="table-responsive table-striped">
+                    <thead>
+                      <th>Pet Name</th>
+                      <th>Pet Image</th>
+                      <th>Pet Status</th>
+                      <th>Pet Shelter Home</th>
+                      <th>Pet Category</th>
+                      <th>Pet SubCategory</th>
+                    </thead>
+                    <tbody>
+                      
+                      {% for p in pets %}
+                      <tr>
+                      <td>{{ p.pet_name }}</td>
+                      <td><img src="{{ p.pet_image_url }}" alt="image of {{ p.pet_name }}" style="width: 80px; height: 60px;" /></td>
+                      <td>{{ p.pet_status }}</td>
+                      <td>{{ p.shelter_home_name }}</td>
+                      <td>{{ p.category_name }}</td>
+                      <td>{{ p.subcategory_name }}</td>
+                      {% endfor %}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                {% else %}
+                  <p class="p-5">No Pets Yet</p>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- pets -->
+            <div id="shelter_homes" class="tab-pane my-5 fade">
+              <h3>Registered Shelter Homes</h3>
+              <div class="row">
+                <p class="text-right"><a class="btn btn-lg" href="/shelter_homes?a=add_shelter_home"> Add + </a></p>
+                {%if shelter_homes|length > 0%}
+                <div class="table">
+                  <table class="table-responsive table-striped">
+                    <thead>
+                      <th>Name</th>
+                      <th colspan="3">Address</th>
+                      <th>Date of Registration</th>
+                      <th colspan="3">Other Briefs</th>
+                    </thead>
+                    <tbody>
+                      
+                      {% for p in shelter_homes %}
+                      <tr>
+                      <td>{{ p.shelter_home_name }}</td>
+                      <td colspan="3">{{ p.address }}</td>
+                      <td>{{ p.registration_date}}</td>
+                      <td colspan="3">{{ p.description}}</td>
+                      {% endfor %}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                {% else %}
+                  <p class="p-5">No Pets Yet</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+    </div>
+    
+{% endblock %}

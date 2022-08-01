@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+            aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+            aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active" style="height: 550px;">
+            <img src="/static/decapet_images/krista-mangulsone-9gz3wfHr65U-unsplash.jpg" class="d-block w-100 img-fluid"
+                alt="..." height="auto">
+            <div class="carousel-caption d-none d-md-block">
+                <h2 class="carousel-header">Are you on the lookout for a new best friend?</h2>
+                <p class="carousel-text">Find your perfect match by searching our database of pets in need of new
+                    homes.</p>
+            </div>
+        </div>
+
+        <div class="carousel-item" style="height: 550px;">
+            <img src="/static/decapet_images/james-sutton-dQ5G0h7sLno-unsplash.jpg" class="d-block w-100 img-fluid"
+                alt="..." height="auto">
+            <div class="carousel-caption d-none d-md-block">
+                <h2 class="carousel-header">Did you lose your pet and have been searching to no avail? </h2>
+                <p class="carousel-text">Fill out a form and we'll help you search through our database to see if
+                    yours is one of the stray animals in our care.</p>
+            </div>
+        </div>
+
+        <div class="carousel-item" style="height: 550px;">
+            <img src="/static/decapet_images/velizar-ivanov-lz_VB9yEc_c-unsplash.jpg" class="d-block w-100 img-fluid"
+                alt="..." height="auto">
+            <div class="carousel-caption d-none d-md-block">
+                <h2 class="carousel-header">Reach out to us today!</h2>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+        <div class="col-lg-4">
+            <img src="/static/decapet_images/vector-adopt-pet-design-poster-260nw-1234243369.jpg.psd.png" alt=""
+                class="img-description">
+
+            <h2 class="text">Book a Pet</h2>
+            <p class="text-content">Get a new friend today!</p>
+            <p><a class="btn btn-secondary" href="/pets?a=get_pets">Click here »</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+            <img src="" alt="" class="img-description">
+
+            <h2 class="text">Report a Missing Pet</h2>
+            <p class="text-content">We can help you find your pet.</p>
+            <p><a class="btn btn-secondary" href="/pet_reports?a=add_pet_report">Click here »</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+            <img src="" alt="" class="img-description">
+
+            <h2 class="text">Donate a Pet</h2>
+            <p class="text-content">We also accept pet donations.</p>
+            <p><a class="btn btn-secondary" href="#">Click here »</a></p>
+        </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+
+    <!-- START THE FEATURETTES -->
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-7">
+            <div class="spacing text-center">
+                <h2 class="featurette-heading">Meet Einstein! <span class="text-muted">Our star canine of the
+                        week.</span></h2>
+                <p class="lead">This fluffy ball of joy and happiness has won the doggie weekly puzzle test for the
+                    fourth time in a row. We think it's safe to say that he is well-named, don't you?”.</p>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <img src="/static/decapet_images/MicrosoftTeams-image.png" alt="" height="500" width="500">
+
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+            <div class="spacing text-center middle-featurette">
+                <h2 class="featurette-heading">Meet Duchess! <span class="text-muted">Our star kitty of the
+                        week.</span></h2>
+                <p class="lead">Who said ladies can't outshine gentlemen in physical contests? This cuddly little
+                    lady left her opponents in the dust during our weekly kitty obstacle course.</p>
+            </div>
+        </div>
+        <div class="col-md-5 order-md-1">
+            <img src="/static/decapet_images/MicrosoftTeams-image (1).png" alt="" height="500" width="500">
+
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+        <div class="col-md-7">
+            <div class="spacing text-center">
+                <h2 class="featurette-heading">Meet Harley! <span class="text-muted">Our resident musician.</span>
+                </h2>
+                <p class="lead">Harley is a red-crowned amazon parrot that has mastered the art of not just talking,
+                    but singing a wide variety of famous songs. And what's more, she's open to taking requests!</p>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <img src="/static/decapet_images/MicrosoftTeams-image (2).png" alt="" height="500" width="500">
+
+        </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- /END THE FEATURETTES -->
+
+</div>
+
+{% endblock %}

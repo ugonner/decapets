@@ -1,0 +1,72 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}
+    Register From Admin
+{% endblock %}
+
+{% block main %}
+
+<ul class="nav nav-tabs">
+    <li class="active"><a class="p-5 btn" data-toggle="tab" href="#pet_category">Pet Category</a></li>
+    <li><a data-toggle="tab" class="p-5 btn" href="#pet_subcategory">Pet SubCategory</a></li>
+
+  </ul>
+  
+  <div class="tab-content">
+    <div id="pet_category" class="tab-pane fade in active">
+      <h3>Pet Categories</h3>
+      <p>
+          {% for c in categories %}
+          <a href="" class="btn d-block"> {{c.name}} </a>
+          {% endfor %}
+      </p>
+
+      <button class="btn btn-block " data-target="#add_category" data-toggle="collapse">Add New + </button>
+
+      <div class="collapse" id="add_category">
+          <form action="/pet_categories" method="post">
+              
+              <div class="mb-3">
+                  <input class="form-control" id="username" name="name" placeholder="category name" type="text">
+              </div>
+              <button class="btn btn-primary" type="submit">Add New</button>
+          </form>
+      </div>
+      
+
+      
+    </div>
+
+    <div id="pet_subcategory" class="tab-pane fade">
+        <h3>Pet SubCategories</h3>
+      <p>
+          {% for s in subcategories %}
+          <a href="" class="btn d-block"> {{s.name}} </a>
+          {% endfor %}
+
+      </p>
+<button class="btn btn-block " data-target="#add_subcategory" data-toggle="collapse">Add New + </button>
+
+<div class="collapse" id="add_subcategory">
+    <form action="/pet_categories" method="post">
+        
+        <div class="mb-3">
+            <input autofocus class="form-control mx-auto w-auto" id="username" name="name" placeholder="subcategory name" type="text">
+        </div>
+        <div class="mb-3">
+            <select class="form-control lg input-lg" name="category_id">
+                <option value="">Please Select Parent Category</option>
+                {% for c in categories %}
+                <option value="{{c.id}}">{{c.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Add New</button>
+    </form>
+</div>
+
+
+
+    </div>
+  </div>
+{% endblock %}  

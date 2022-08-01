@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+  <!-- User registration form -->
+  <div class="wrapper">
+    <div class="form-left">
+        <h2 class="text-uppercase">information</h2>
+        <p>Are you on the lookout for a new best friend? Find your perfect match by searching our database of pets in need of new homes. Sign up with us today to make that dream a reality. </p>
+        <p class="text"> <span>Already a Family Member?</span> Click on the button below to Log in. </p>
+        <div class="form-field"><a href="/login"><input type="submit" class="account" value="Have an Account?"></a></div>
+    </div>
+    <form class="form-right" action="/register" method="post">
+        <h2 class="text-uppercase">Registration Form</h2>
+        <div class="row">
+            <div class="b-3"> <label>Name</label> <input type="text" name="user_name" id="user_name" class="input-field" required> </div>
+        </div>
+        <div class="mb-3 row"> <label>Email</label> <input type="email" class="input-field" name="email" required> </div>
+        <div class="row">
+            <div class="col-sm-6 mb-3"> <label>Password</label> <input type="Password" name="password" id="pwd" class="input-field" required> </div>
+            <div class="col-sm-6 mb-3"> <label>Confirm Password</label> <input type="Password" name="confirmation" id="cpwd" class="input-field" required> </div>
+        </div>
+        <input type="text" name="role" value="user" hidden>
+        <!-- <div class="mb-3">
+            <select name="role">
+                <option value="">Please Select Role</option>
+                <option value="client">Client</option>
+                <option value="staff">Staff</option>
+                <option value="user">User</option>
+            </select>
+        </div> -->
+        <!-- <div class="mb-3"> <label class="option">I agree to the <a href="#">Terms and Conditions</a> <input type="checkbox" checked> <span class="checkmark"></span> </label> </div> -->
+        <!-- <div class="form-field"> <input type="submit" value="Register" class="register" name="register"> </div> -->
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+</div>
+
+{% endblock %}

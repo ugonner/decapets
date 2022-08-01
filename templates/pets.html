@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Pets
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-sm-12 p-5">
+            <h3>Pets | {{pets|length}}</h3>
+        </div>
+
+        <div class=""></div>
+    </div>
+    <div class="row">
+        {% for p in pets%}
+            <div class="col-sm-4 my-2">
+                <div>
+                    <img src="{{p.pet_image_url}}" class="img-fluid" alt="{{p.pet_name}}" />
+                </div>
+                <div>
+                    <h3>{{p.pet_name}}</h3>
+                    <h6>{{p.category_name}} | {{p.subcategory_name}}  <br> Shelter: {{p.shelter_home_name}}</h6>
+                    <h6>{{p.price | usd}} | 
+                        {% if p.pet_status == 'Available' %}
+                        <a href="/bookings?a=add_to_cart&id={{p.id}}&price={{p.price}}&quantity=1" class="btn btn-danger">Book</a></h6>
+                        {% else %}
+                            <span class="btn font-weight-bolder">{{ p.pet_status }}</span>
+                        {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

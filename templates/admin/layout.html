@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+    <link href="css/styles.css" rel="stylesheet">
+    <!-- end bootstrap -->
+
+    <!-- http://getbootstrap.com/docs/5.1/ -->
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
+    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
+
+    <!-- https://favicon.io/emoji-favicons/money-bag/ -->
+    <link href="/static/favicon.ico" rel="icon">
+
+    <link href="/static/styles.css" rel="stylesheet">
+
+    <title>Decapet Project: {% block title %}{% endblock %}</title>
+
+</head>
+
+<body>
+
+    <nav class="bg-light border navbar navbar-expand-md navbar-light">
+        <div class="container-fluid">
+            <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+                <img src="/static/decapet_images/decapet_logo.png" alt="decapet logo" width="57" height="42">
+            </a>
+
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                    <form class="d-flex" action="/pets" method="get">
+                        <input class="form-control me-2 lg" type="search" name="val" placeholder="Search Pet"
+                            aria-label="Search" required>
+                        <input type="hidden" name="a" value="search">
+                        <button class="btn btn-outline-success btn-primary" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
+
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 nav-items">
+                <li><a href="/" class="nav-link px-2 link-secondary nav-item link-dark">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle link-dark" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Adopt
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item link-dark" href="/pets?a=get_pets">Pets for Adoption</a></li>
+                    </ul>
+                </li>
+                <li><a href="contact.html" class="nav-link px-2 link-dark">Contact</a></li>
+            </ul>
+            <div class="collapse navbar-collapse" id="navbar">
+                {% if session["user_id"] %}
+
+                <ul class="navbar-nav ms-auto mt-2">
+                    <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                </ul>
+                {% else %}
+                <ul class="navbar-nav ms-auto mt-2">
+                    <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {% if get_flashed_messages() %}
+    <header>
+        <div class="alert alert-primary mb-0 text-center" role="alert">
+            {{ get_flashed_messages() | join(" ") }}
+        </div>
+    </header>
+    {% endif %}
+
+    <main class="container-fluid py-5">
+        <div class="row">
+            <div class="col-sm-4 bg-dark text-light">
+                <div class="py-4">
+                    <div class="text-center my-5">
+                        <h3>Panel <a href="/admin" class="btn font-weight-bold fa fa-home text-white"> >></a></h3>
+                    </div>
+
+                    <button class="btn btn-block btn-lg text-light" data-bs-target="#get_pet"
+                        data-bs-toggle="collapse">Pets</button>
+                    <div class="collapse" id="get_pet">
+
+                        <h6><small>BY CATEGORIES</small></h6>
+                        {% for pc in categories %}
+                        <a class="btn btn-block text-light"
+                            href="/pets?a=get_pets&pty=category_id&val={{pc.id}}">{{pc.name}}</a>
+                        {% endfor %}
+
+                        <h6 class="my-4"><small>BY SUBCATEGORIES</small></h6>
+                        {% for psc in subcategories %}
+                        <a class="btn btn-block text-light"
+                            href="/pets?a=get_pets&pty=subcategory_id&val={{psc.id}}">{{psc.name}}</a>
+                        {% endfor %}
+
+                    </div>
+
+                    <button class="btn my-1 btn-block btn-lg text-light" data-bs-toggle="collapse"
+                        data-bs-target="#get_pet_reports">Pet Reports</button>
+                    <div class="collapse" id="get_pet_reports">
+                        <a class="btn text-light btn-block"
+                            href="/pet_reports?a=get_pet_reports&pty=pet_status&val='Strayed'">Strayed</a>
+                        <a class="text-light btn btn-block"
+                            href="/pet_reports?a=get_pet_reports&pty=pet_status&val='Cruelty'">Cruelty</a>
+                        <a class="text-light btn btn-block"
+                            href="/pet_reports?a=get_pet_reports&pty=pet_status&val='Settled'">Settled</a>
+
+                        <h6 class="btn my-3">BY PET CATEGORYIES</h6>
+                        {% for prc in categories %}
+                        <a class="text-light btn btn-block"
+                            href="/pet_reports?a=get_pet_reports&pty=category_id&val={{prc.id}}">{{prc.name}}</a>
+                        {% endfor %}
+
+                        <h6 class="btn">BY PET SUBCATEGORYIES</h6>
+                        {% for prsc in subcategories %}
+                        <a class="text-light btn btn-block"
+                            href="/pet_reports?a=get_pet_reports&pty=subcategory_id&val={{prsc.id}}">{{prsc.name}}</a>
+                        {% endfor %}
+
+                    </div>
+
+                    <button class="btn btn-block btn-lg text-light" data-bs-toggle="collapse"
+                        data-bs-target="#get_bookings">Bookings</button>
+                    <div class="collapse" id="get_bookings">
+                        <a class="text-light btn btn-block"
+                            href="/bookings?a=get_bookings&pty=payment_status&val=Paid">Paid</a>
+                        <a class="text-light btn btn-block"
+                            href="/bookings?a=get_bookings&pty=payment_status&val=UnUnPaid">UnPaid</a>
+                        <a class="text-light btn btn-block"
+                            href="/bookings?a=get_bookings&pty=booking_status&val=Under Verification">Under
+                            Verification</a>
+                        <a class="text-light btn btn-block"
+                            href="/bookings?a=get_bookings&pty=booking_status&val=Verified">Verified</a>
+                        <a class="text-light btn btn-block"
+                            href="/bookings?a=get_bookings&pty=booking_status&val=Approved">Approved</a>
+                        <a class="text-light btn btn-block"
+                            href="/bookings?a=get_bookings&pty=booking_status&val=Not Approved">Not Approved</a>
+
+                    </div>
+
+                    <a href="/user?a=get_users" class="btn btn-lg btn-block my-1 text-light">Users</a>
+                    <a href="/pet_reports?a=add_pet_report" class="my-1 btn-lg btn btn-block text-light">Report Pet</a>
+                    <a href="/shelter_homes?a=add_shelter_home" class="btn my-1 btn-lg text-light btn-block">Shelter
+                        Homes</a>
+                    <a href="/pet_categories" class="my-1 btn btn-block text-light btn-lg">Pet Categories</a>
+                </div>
+
+                <div class="">
+                </div>
+            </div>
+            <div class="col-sm-8">
+                {% block main %}{% endblock %}
+            </div>
+        </div>
+    </main>
+
+    <footer class="mb-5 small text-center text-muted">
+        <span>&copy; DecaSquad-11 | Powered &trade; Group 2!</span>
+    </footer>
+
+    <script type="text/javascript">
+        //alert("HELLO")
+        var c_select = document.getElementById("category_id")
+        var sc_select = document.getElementById("subcategory_id")
+
+        function getSubCategories() {
+            try {
+                c_id = c_select.value;
+                subcategories = [
+                    {% if subcategories | length > 1 %}
+                    {% for s in subcategories %}
+            {% if loop.index == 1 %}
+            { id: { { s.id } }, name: "{{s.name}}", category_id: { { s.category_id } } },
+            {% elif loop.index == subcategories | length %}
+            { id: { { s.id } }, name: "{{s.name}}", category_id: { { s.category_id } } }
+            {% else %}
+            { id: { { s.id } }, name: "{{s.name}}", category_id: { { s.category_id } } },
+            {% endif %}
+            {% endfor %}
+            {% else %}
+            {% for s in subcategories %}
+            { id: { { s.id } }, name: "{{s.name}}", category_id: { { s.category_id } } }
+            {% endfor %}
+            {% endif %}
+                ];
+
+            sub_cats = [];
+            sub_cats_str = "<option value=''>Please Select Subcategory</option>";
+            for (let i = 0; i < subcategories.length; i++) {
+                if (c_id == subcategories[i].category_id) {
+                    //alert(c_id + " "+subcategories[i].category_id)
+                    sub_cats_str += '<option value="' + subcategories[i].id + '">' + subcategories[i].name + '<option>';
+
+                }
+            }
+            //alert(sub_cats_str)
+            sc_select.innerHTML = sub_cats_str;
+            //alert(subcategories[0].id);
+        }
+                catch (e) {
+            alert("error" + e.message)
+        } 
+            }
+
+        c_select.addEventListener("change", getSubCategories);
+            //getSubCategories();
+
+
+    </script>
+
+</body>
+
+</html>
